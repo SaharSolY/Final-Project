@@ -1,0 +1,63 @@
+<h2>My form</h2>
+
+<form #registrationForm="ngForm" (ngSubmit)="onSubmitRegistration()">
+    <div>
+        <mat-form-field>
+            <mat-label>Category Name:</mat-label>
+            <input matInput [(ngModel)]="currentCategory.name" name="CategoryName" required>
+        </mat-form-field>
+    </div>    
+    <div>
+        <mat-form-field>
+            <mat-label>Source Language:</mat-label>
+            <input matInput [(ngModel)]="sourceLanguage" name="Englishlanguage" [disabled]="true">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>Target Language:</mat-label>
+            <input matInput [(ngModel)]="targetLanguage" name="Hebrewlanguage" [disabled]="true">
+        </mat-form-field>
+    </div>
+    
+    
+
+    <div class="words-title">
+        <h3>Words</h3>
+        <button mat-fab type="button" (click)="addWords()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <h3>Add new word</h3>
+    </div>
+    
+    <div ngModelGroup="categoriesGroup" #categoriesGroup="ngModelGroup">
+        <div *ngFor="let word of currentCategory.ListWords; let i = index" class="words-form">
+            <mat-form-field>
+                <mat-label>Origin:</mat-label>
+                <input matInput [(ngModel)]="word.SourceString" name="origin-{{i}}"
+                pattern="[a-zA-Z ]*" title="Please enter only English characters" required>
+                <mat-error *ngIf="!registrationForm.controls['origin-' + i]?.valid">
+                    Please enter only English characters.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Target:</mat-label>
+                <input matInput [(ngModel)]="word.TranslateString" name="target-{{i}}"
+                pattern="[א-ת\s]*" title="Please enter only Hebrew characters" required>
+                <mat-error *ngIf="!registrationForm.controls['target-' + i]?.valid">
+                    Please enter only Hebrew characters.
+                </mat-error>
+            </mat-form-field>
+            <button type="button" mat-icon-button (click)="removeWords(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" mat-raised-button color="primary"
+            [disabled]="registrationForm.invalid || registrationForm.pristine || !hasNewWord()">
+            Save
+        </button>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+body {
+    display: grid;
+    grid-template-rows: 1fr auto; 
+    height: 60vh; 
+    margin: 0;
+}
+
+
+footer {
+    text-align: right;
+
+}
